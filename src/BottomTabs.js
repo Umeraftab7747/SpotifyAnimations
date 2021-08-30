@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Image,
   Dimensions,
+  Slider,
 } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -26,9 +27,6 @@ const LIMIT_SCREEN = SCREEN_HEIGHT / 2;
 const Bottomtabs = () => {
   const TouchY = useSharedValue(0);
   const TouchX = useSharedValue(0);
-  let value;
-
-  React.useEffect(() => {}, [value]);
 
   const GestureFunction = useAnimatedGestureHandler({
     onStart: (event, context) => {
@@ -52,7 +50,8 @@ const Bottomtabs = () => {
   const MoveSlider = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: TouchY.value }],
-      opacity: interpolate(TouchY.value, [-700, 0, 5], [0, 1, 1]),
+      // opacity: interpolate(TouchY.value, [-700, 0, 5], [0, 1, 1]),
+      opacity: interpolate(TouchY.value, [-350, -700], [1, 0]),
     };
   });
 
@@ -66,6 +65,7 @@ const Bottomtabs = () => {
       opacity: interpolate(TouchY.value, [-5, 0, 5], [0.9, 1, 1]),
     };
   });
+
   const ScreenPlayerStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -82,10 +82,14 @@ const Bottomtabs = () => {
   });
   const TopTabStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(TouchY.value, [-20, 0, -700], [1, 1, 0]),
+      opacity: interpolate(TouchY.value, [-350, -750], [0, 1]),
     };
   });
-
+  const MusicScreenSytle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(TouchY.value, [-300, -750], [0, 1]),
+    };
+  });
   return (
     <View style={styles.container}>
       <SafeAreaView />
@@ -118,12 +122,58 @@ const Bottomtabs = () => {
 
       {/* SCREEN PLAYER */}
       <Animated.View style={[styles.screenPlayer, ScreenPlayerStyles]}>
+        {/* TopTab */}
         <Animated.View style={[styles.TopTab, TopTabStyle]}>
           <View style={styles.leftContainer}>
             <Tabicon iconname={"chevron-down-outline"} color={"white"} />
           </View>
           <View style={styles.MiddleContainer}>
             <Text style={styles.LikedText}>Liked Song</Text>
+          </View>
+        </Animated.View>
+        {/* TopTab */}
+
+        <Animated.View style={[styles.MainMusicContainer, MusicScreenSytle]}>
+          <Image style={styles.imges} source={require("../assets/drke.jpeg")} />
+          <Text style={styles.StartupHeader}>Library: Start Up!</Text>
+          <Text style={styles.StartupHeader}>
+            Song: Lemon Pepper (feat. Rick Ross)
+          </Text>
+          {/* slider */}
+          <View
+            style={{
+              height: 40,
+              width: "100%",
+              alignItems: "center",
+              marginTop: "10%",
+            }}
+          >
+            <Slider
+              style={{ width: 300 }}
+              step={1}
+              minimumValue={18}
+              maximumValue={71}
+              value={18}
+              minimumTrackTintColor={"green"}
+              maximumTrackTintColor={"white"}
+            />
+          </View>
+          {/* slider */}
+
+          <View
+            style={{
+              width: "80%",
+              height: "20%",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-around",
+              marginBottom: h("5%"),
+              // backgroundColor: "red",
+            }}
+          >
+            <Tabicon iconname={"caret-back-outline"} color={"#fff"} />
+            <Tabicon iconname={"pause-sharp"} color={"#fff"} />
+            <Tabicon iconname={"caret-forward-outline"} color={"#fff"} />
           </View>
         </Animated.View>
       </Animated.View>
@@ -210,6 +260,7 @@ const styles = StyleSheet.create({
     bottom: -SCREEN_HEIGHT / 1.19,
     left: 0,
     zIndex: -2,
+    alignItems: "center",
   },
   TopTab: {
     backgroundColor: "black",
@@ -237,6 +288,24 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: h("2.2%"),
     fontWeight: "bold",
+  },
+  MainMusicContainer: {
+    // backgroundColor: "white",
+    width: "90%",
+    height: h("70%"),
+    alignItems: "center",
+    paddingTop: h("10%"),
+  },
+  imges: {
+    width: "80%",
+    height: "50%",
+    resizeMode: "contain",
+  },
+  StartupHeader: {
+    color: "white",
+    fontSize: h("2.0%"),
+    fontWeight: "bold",
+    marginTop: h("1%"),
   },
 });
 export default Bottomtabs;
