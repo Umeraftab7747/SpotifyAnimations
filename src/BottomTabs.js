@@ -14,7 +14,6 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { w, h } from "react-native-responsiveness";
@@ -24,9 +23,10 @@ import Tabicon from "./Tabicon";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const LIMIT_SCREEN = SCREEN_HEIGHT / 2;
 
-const Bottomtabs = () => {
+const Bottomtabs = (props) => {
   const TouchY = useSharedValue(0);
   const TouchX = useSharedValue(0);
+  const [screen, setScreen] = React.useState("screenOne");
 
   const GestureFunction = useAnimatedGestureHandler({
     onStart: (event, context) => {
@@ -50,7 +50,6 @@ const Bottomtabs = () => {
   const MoveSlider = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: TouchY.value }],
-      // opacity: interpolate(TouchY.value, [-700, 0, 5], [0, 1, 1]),
       opacity: interpolate(TouchY.value, [-350, -700], [1, 0]),
     };
   });
@@ -80,123 +79,195 @@ const Bottomtabs = () => {
       opacity: interpolate(TouchY.value, [-20, 0, 200], [1, 1, 0]),
     };
   });
+
   const TopTabStyle = useAnimatedStyle(() => {
     return {
       opacity: interpolate(TouchY.value, [-350, -750], [0, 1]),
     };
   });
+
   const MusicScreenSytle = useAnimatedStyle(() => {
     return {
       opacity: interpolate(TouchY.value, [-300, -750], [0, 1]),
     };
   });
+
   return (
     <View style={styles.container}>
       <SafeAreaView />
-      {/* animation */}
-      <PanGestureHandler onGestureEvent={GestureFunction}>
-        {/* mini Player */}
-        <Animated.View style={[styles.minPlayer, MoveSlider]}>
-          {/* leftContainer */}
-          <View style={styles.imgContainer}>
-            <Image style={styles.img} source={require("../assets/drke.jpeg")} />
-          </View>
-          {/* MidContainer */}
-          <View style={styles.middleContainer}>
-            <Text style={styles.txt} numberOfLines={1} ellipsizeMode={"tail"}>
-              Lemon Pepper Freestyle (feat. Rick Ross)
-            </Text>
-            <Text style={styles.PlayText}>Air pods Connected </Text>
-          </View>
-          {/* RightContainer */}
-          <View style={styles.RightConTainer}>
-            <Tabicon iconname={"bluetooth"} color={"green"} />
-          </View>
-          {/* RightContainer 2 */}
-          <View style={styles.RightConTainer}>
-            <Tabicon iconname={"play"} color={"#fff"} />
-          </View>
-        </Animated.View>
-        {/* mini Player */}
-      </PanGestureHandler>
 
-      {/* SCREEN PLAYER */}
-      <Animated.View style={[styles.screenPlayer, ScreenPlayerStyles]}>
-        {/* TopTab */}
-        <Animated.View style={[styles.TopTab, TopTabStyle]}>
-          <View style={styles.leftContainer}>
-            <Tabicon iconname={"chevron-down-outline"} color={"white"} />
+      {screen === "screenOne" && (
+        <>
+          <View style={styles.FlatlistContainer}>
+            <Text>Screen 1</Text>
           </View>
-          <View style={styles.MiddleContainer}>
-            <Text style={styles.LikedText}>Liked Song</Text>
-          </View>
-        </Animated.View>
-        {/* TopTab */}
 
-        <Animated.View style={[styles.MainMusicContainer, MusicScreenSytle]}>
-          <Image style={styles.imges} source={require("../assets/drke.jpeg")} />
-          <Text style={styles.StartupHeader}>Library: Start Up!</Text>
-          <Text style={styles.StartupHeader}>
-            Song: Lemon Pepper (feat. Rick Ross)
-          </Text>
-          {/* slider */}
-          <View
-            style={{
-              height: 40,
-              width: "100%",
-              alignItems: "center",
-              marginTop: "10%",
-            }}
+          {/* animation */}
+          <PanGestureHandler onGestureEvent={GestureFunction}>
+            {/* mini Player */}
+            <Animated.View style={[styles.minPlayer, MoveSlider]}>
+              {/* leftContainer */}
+              <View style={styles.imgContainer}>
+                <Image
+                  style={styles.img}
+                  source={require("../assets/drke.jpeg")}
+                />
+              </View>
+              {/* MidContainer */}
+              <View style={styles.middleContainer}>
+                <Text
+                  style={styles.txt}
+                  numberOfLines={1}
+                  ellipsizeMode={"tail"}
+                >
+                  Lemon Pepper Freestyle (feat. Rick Ross)
+                </Text>
+                <Text style={styles.PlayText}>Air pods Connected </Text>
+              </View>
+              {/* RightContainer */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"bluetooth"} color={"green"} />
+              </View>
+              {/* RightContainer 2 */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"play"} color={"#fff"} />
+              </View>
+            </Animated.View>
+            {/* mini Player */}
+          </PanGestureHandler>
+
+          {/* SCREEN PLAYER */}
+          <Animated.View style={[styles.screenPlayer, ScreenPlayerStyles]}>
+            {/* TopTab */}
+            <Animated.View style={[styles.TopTab, TopTabStyle]}>
+              <View style={styles.leftContainer}>
+                <Tabicon iconname={"chevron-down-outline"} color={"white"} />
+              </View>
+              <View style={styles.MiddleContainer}>
+                <Text style={styles.LikedText}>Liked Song</Text>
+              </View>
+            </Animated.View>
+            {/* TopTab */}
+
+            <Animated.View
+              style={[styles.MainMusicContainer, MusicScreenSytle]}
+            >
+              <Image
+                style={styles.imges}
+                source={require("../assets/drke.jpeg")}
+              />
+              <Text style={styles.StartupHeader}>Library: Start Up!</Text>
+              <Text style={styles.StartupHeader}>
+                Song: Lemon Pepper (feat. Rick Ross)
+              </Text>
+              {/* slider */}
+              <View
+                style={{
+                  height: 40,
+                  width: "100%",
+                  alignItems: "center",
+                  marginTop: "10%",
+                }}
+              >
+                <Slider
+                  style={{ width: 300 }}
+                  step={1}
+                  minimumValue={18}
+                  maximumValue={71}
+                  value={18}
+                  minimumTrackTintColor={"green"}
+                  maximumTrackTintColor={"white"}
+                />
+              </View>
+              {/* slider */}
+
+              <View
+                style={{
+                  width: "80%",
+                  height: "20%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  marginBottom: h("5%"),
+                  // backgroundColor: "red",
+                }}
+              >
+                <Tabicon iconname={"caret-back-outline"} color={"#fff"} />
+                <Tabicon iconname={"pause-sharp"} color={"#fff"} />
+                <Tabicon iconname={"caret-forward-outline"} color={"#fff"} />
+              </View>
+            </Animated.View>
+          </Animated.View>
+          {/* SCREEN PLAYER */}
+
+          {/* Animtions */}
+          <Animated.View
+            style={[
+              SlideBottomTab,
+              {
+                // backgroundColor: "red",
+                width: "100%",
+                height: "30%",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                zIndex: -1,
+                flexDirection: "row",
+              },
+            ]}
           >
-            <Slider
-              style={{ width: 300 }}
-              step={1}
-              minimumValue={18}
-              maximumValue={71}
-              value={18}
-              minimumTrackTintColor={"green"}
-              maximumTrackTintColor={"white"}
+            <Tab
+              firstBtn={() => {
+                setScreen("screenOne");
+              }}
+              SecondBtn={() => {
+                setScreen("screenTwo");
+              }}
+              ThirdBtn={() => {
+                setScreen("screenThree");
+              }}
             />
-          </View>
-          {/* slider */}
+          </Animated.View>
+        </>
+      )}
 
-          <View
-            style={{
-              width: "80%",
-              height: "20%",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-around",
-              marginBottom: h("5%"),
-              // backgroundColor: "red",
+      {screen === "screenTwo" && (
+        <>
+          <View>
+            <Text>Screen 2</Text>
+          </View>
+          <Tab
+            firstBtn={() => {
+              setScreen("screenOne");
             }}
-          >
-            <Tabicon iconname={"caret-back-outline"} color={"#fff"} />
-            <Tabicon iconname={"pause-sharp"} color={"#fff"} />
-            <Tabicon iconname={"caret-forward-outline"} color={"#fff"} />
-          </View>
-        </Animated.View>
-      </Animated.View>
-      {/* SCREEN PLAYER */}
+            SecondBtn={() => {
+              setScreen("screenTwo");
+            }}
+            ThirdBtn={() => {
+              setScreen("screenThree");
+            }}
+          />
+        </>
+      )}
 
-      {/* Animtions */}
-      <Animated.View
-        style={[
-          SlideBottomTab,
-          {
-            // backgroundColor: "red",
-            width: "100%",
-            height: "30%",
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            zIndex: -1,
-            flexDirection: "row",
-          },
-        ]}
-      >
-        <Tab />
-      </Animated.View>
+      {screen === "screenThree" && (
+        <>
+          <View>
+            <Text>Screen 3</Text>
+          </View>
+          <Tab
+            firstBtn={() => {
+              setScreen("screenOne");
+            }}
+            SecondBtn={() => {
+              setScreen("screenTwo");
+            }}
+            ThirdBtn={() => {
+              setScreen("screenThree");
+            }}
+          />
+        </>
+      )}
     </View>
   );
 };
@@ -206,7 +277,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
   },
   minPlayer: {
@@ -306,6 +377,12 @@ const styles = StyleSheet.create({
     fontSize: h("2.0%"),
     fontWeight: "bold",
     marginTop: h("1%"),
+  },
+  FlatlistContainer: {
+    backgroundColor: "red",
+    width: "100%",
+    height: "100%",
+    zIndex: -2,
   },
 });
 export default Bottomtabs;

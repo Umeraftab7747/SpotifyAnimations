@@ -4,9 +4,9 @@ import { Icon } from "react-native-elements";
 
 const Tabicon = ({ iconname, color }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <View style={styles.container}>
       <Icon name={iconname} type="ionicon" color={color} />
-    </TouchableOpacity>
+    </View>
   );
 };
 

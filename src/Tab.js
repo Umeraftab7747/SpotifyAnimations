@@ -1,15 +1,21 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { w, h } from "react-native-responsiveness";
 import Tabicon from "./Tabicon";
 
-const Tab = () => {
+const Tab = ({ firstBtn, SecondBtn, ThirdBtn }) => {
   return (
     <View style={styles.container}>
       <View style={styles.bottomContainer}>
-        <Tabicon iconname={"home-sharp"} color={"#fff"} />
-        <Tabicon iconname={"search-sharp"} color={"#fff"} />
-        <Tabicon iconname={"library"} color={"#fff"} />
+        <TouchableOpacity style={styles.containers} onPress={firstBtn}>
+          <Tabicon iconname={"home-sharp"} color={"#fff"} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.containers} onPress={SecondBtn}>
+          <Tabicon iconname={"search-sharp"} color={"#fff"} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.containers} onPress={ThirdBtn}>
+          <Tabicon iconname={"library"} color={"#fff"} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -34,6 +40,12 @@ const styles = StyleSheet.create({
     height: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
+    alignItems: "center",
+  },
+  containers: {
+    width: "30%",
+    height: "80%",
+    justifyContent: "center",
     alignItems: "center",
   },
 });
