@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   Slider,
+  TextInput,
 } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
@@ -19,6 +20,8 @@ import Animated, {
 import { w, h } from "react-native-responsiveness";
 import Tab from "./Tab.js";
 import Tabicon from "./Tabicon";
+import List from "../components/List";
+import { Data } from "../data";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const LIMIT_SCREEN = SCREEN_HEIGHT / 2;
@@ -27,6 +30,7 @@ const Bottomtabs = (props) => {
   const TouchY = useSharedValue(0);
   const TouchX = useSharedValue(0);
   const [screen, setScreen] = React.useState("screenOne");
+  const [media, setmedia] = React.useState(Data[3]);
 
   const GestureFunction = useAnimatedGestureHandler({
     onStart: (event, context) => {
@@ -94,12 +98,22 @@ const Bottomtabs = (props) => {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView />
-
+      <SafeAreaView style={{ flex: 0, backgroundColor: "black" }} />
       {screen === "screenOne" && (
         <>
           <View style={styles.FlatlistContainer}>
-            <Text>Screen 1</Text>
+            <View style={styles.Header}>
+              <Text style={styles.HText}>Home</Text>
+            </View>
+            {Data.map((item) => (
+              <List
+                data={item}
+                key={item.id}
+                BtnPress={() => {
+                  setmedia(item);
+                }}
+              />
+            ))}
           </View>
 
           {/* animation */}
@@ -108,10 +122,7 @@ const Bottomtabs = (props) => {
             <Animated.View style={[styles.minPlayer, MoveSlider]}>
               {/* leftContainer */}
               <View style={styles.imgContainer}>
-                <Image
-                  style={styles.img}
-                  source={require("../assets/drke.jpeg")}
-                />
+                <Image style={styles.img} source={media.Image} />
               </View>
               {/* MidContainer */}
               <View style={styles.middleContainer}>
@@ -120,7 +131,7 @@ const Bottomtabs = (props) => {
                   numberOfLines={1}
                   ellipsizeMode={"tail"}
                 >
-                  Lemon Pepper Freestyle (feat. Rick Ross)
+                  {media.song}
                 </Text>
                 <Text style={styles.PlayText}>Air pods Connected </Text>
               </View>
@@ -152,14 +163,14 @@ const Bottomtabs = (props) => {
             <Animated.View
               style={[styles.MainMusicContainer, MusicScreenSytle]}
             >
-              <Image
-                style={styles.imges}
-                source={require("../assets/drke.jpeg")}
-              />
-              <Text style={styles.StartupHeader}>Library: Start Up!</Text>
-              <Text style={styles.StartupHeader}>
-                Song: Lemon Pepper (feat. Rick Ross)
+              <Image style={styles.imges} source={media.Image} />
+              <Text numberOfLines={1} style={styles.StartupHeader}>
+                Song: {media.song}
               </Text>
+              <Text style={styles.StartupHeader2}>
+                Library: {media.Library}
+              </Text>
+
               {/* slider */}
               <View
                 style={{
@@ -233,8 +244,33 @@ const Bottomtabs = (props) => {
 
       {screen === "screenTwo" && (
         <>
-          <View>
-            <Text>Screen 2</Text>
+          <View style={styles.FlatlistContainer}>
+            <View style={styles.Header}>
+              <Text style={styles.HText}>Search</Text>
+            </View>
+
+            {/* search */}
+            <View style={styles.Searchbox}>
+              <View style={styles.Search}>
+                <View style={styles.icon}>
+                  <Tabicon iconname={"search-sharp"} color={"#000"} />
+                </View>
+                <TextInput
+                  placeholder={"Search your Favourite Song"}
+                  style={styles.TextInput}
+                />
+              </View>
+            </View>
+            {/* search */}
+            {Data.map((item) => (
+              <List
+                data={item}
+                key={item.id}
+                BtnPress={() => {
+                  setmedia(item);
+                }}
+              />
+            ))}
           </View>
           <Tab
             firstBtn={() => {
@@ -252,8 +288,35 @@ const Bottomtabs = (props) => {
 
       {screen === "screenThree" && (
         <>
-          <View>
-            <Text>Screen 3</Text>
+          <View style={styles.FlatlistContainer}>
+            <View style={styles.Header2}>
+              <Text style={styles.HText}>Music Libraries</Text>
+            </View>
+
+            {/* listing */}
+            <View style={styles.List1}>
+              <View style={styles.Listicon}>
+                <Tabicon iconname={"heart-sharp"} color={"#fff"} />
+              </View>
+              <Text style={styles.ftext}>Favourite Songs List</Text>
+            </View>
+            {/* listing */}
+            {/* listing */}
+            <View style={styles.List1}>
+              <View style={styles.Listicon}>
+                <Tabicon iconname={"bookmarks"} color={"#fff"} />
+              </View>
+              <Text style={styles.ftext}>Marked Songs List</Text>
+            </View>
+            {/* listing */}
+            {/* listing */}
+            <View style={styles.List1}>
+              <View style={styles.Listicon}>
+                <Tabicon iconname={"albums"} color={"#fff"} />
+              </View>
+              <Text style={styles.ftext}>Genere List</Text>
+            </View>
+            {/* listing */}
           </View>
           <Tab
             firstBtn={() => {
@@ -284,7 +347,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     width: "100%",
     height: h("8%"),
-
     position: "absolute",
     bottom: 70,
     left: 0,
@@ -306,7 +368,7 @@ const styles = StyleSheet.create({
     width: "50%",
     height: "100%",
     justifyContent: "center",
-    // alignItems: "center",
+    marginLeft: h("1%"),
   },
   txt: {
     color: "white",
@@ -318,7 +380,7 @@ const styles = StyleSheet.create({
   },
   RightConTainer: {
     // backgroundColor: "gold",
-    width: "15%",
+    width: "14%",
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -376,13 +438,92 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: h("2.0%"),
     fontWeight: "bold",
+    marginTop: h("2%"),
+  },
+  StartupHeader2: {
+    color: "white",
+    fontSize: h("1.8%"),
     marginTop: h("1%"),
   },
   FlatlistContainer: {
-    backgroundColor: "red",
+    backgroundColor: "#000",
     width: "100%",
     height: "100%",
     zIndex: -2,
+  },
+  Header: {
+    backgroundColor: "#000",
+    width: "100%",
+    height: h("7%"),
+    borderBottomWidth: h("0.1%"),
+    borderBottomColor: "#fff3",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: h("2%"),
+  },
+  HText: {
+    color: "white",
+    fontSize: h("2%"),
+    fontWeight: "bold",
+  },
+  Searchbox: {
+    // backgroundColor: "red",
+    width: "100%",
+    height: h("10%"),
+    // marginBottom: h("2%"),
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  Search: {
+    backgroundColor: "white",
+    width: "90%",
+    height: h("6%"),
+    borderRadius: h("100%"),
+    overflow: "hidden",
+    flexDirection: "row",
+  },
+  icon: {
+    width: "20%",
+    height: "100%",
+    // backgroundColor: "gold",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  TextInput: {
+    // backgroundColor: "red",
+    width: "80%",
+    height: "100%",
+  },
+  List1: {
+    width: "100%",
+    height: h("7%"),
+    // backgroundColor: "red",
+    flexDirection: "row",
+    borderColor: "#fff3",
+    borderWidth: h("0.2%"),
+    alignItems: "center",
+    // justifyContent: "center",
+  },
+  Listicon: {
+    width: "20%",
+    height: "100%",
+    // backgroundColor: "gold",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  Header2: {
+    backgroundColor: "#000",
+    width: "100%",
+    height: h("7%"),
+    borderBottomWidth: h("0.1%"),
+    borderBottomColor: "#fff3",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  ftext: {
+    color: "white",
+    fontSize: h("2%"),
+    fontWeight: "bold",
   },
 });
 export default Bottomtabs;
