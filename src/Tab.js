@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { w, h } from "react-native-responsiveness";
 import Tabicon from "./Tabicon";
 
-const Tab = ({ firstBtn, SecondBtn, ThirdBtn }) => {
+const Tab = ({ firstBtn, SecondBtn, ThirdBtn, ForthBtn }) => {
   return (
     <View style={styles.container}>
       <View style={styles.bottomContainer}>
@@ -16,6 +16,9 @@ const Tab = ({ firstBtn, SecondBtn, ThirdBtn }) => {
         <TouchableOpacity style={styles.containers} onPress={ThirdBtn}>
           <Tabicon iconname={"library"} color={"#fff"} />
         </TouchableOpacity>
+        <TouchableOpacity style={styles.containers} onPress={ForthBtn}>
+          <Tabicon iconname={"person"} color={"#fff"} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -25,7 +28,7 @@ export default Tab;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000",
+    backgroundColor: "dodgerblue",
     width: "100%",
     height: h("8%"),
     justifyContent: "center",

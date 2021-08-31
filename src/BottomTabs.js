@@ -237,6 +237,9 @@ const Bottomtabs = (props) => {
               ThirdBtn={() => {
                 setScreen("screenThree");
               }}
+              ForthBtn={() => {
+                setScreen("ForthScreen");
+              }}
             />
           </Animated.View>
         </>
@@ -272,17 +275,132 @@ const Bottomtabs = (props) => {
               />
             ))}
           </View>
-          <Tab
-            firstBtn={() => {
-              setScreen("screenOne");
-            }}
-            SecondBtn={() => {
-              setScreen("screenTwo");
-            }}
-            ThirdBtn={() => {
-              setScreen("screenThree");
-            }}
-          />
+          {/* animation */}
+          <PanGestureHandler onGestureEvent={GestureFunction}>
+            {/* mini Player */}
+            <Animated.View style={[styles.minPlayer, MoveSlider]}>
+              {/* leftContainer */}
+              <View style={styles.imgContainer}>
+                <Image style={styles.img} source={media.Image} />
+              </View>
+              {/* MidContainer */}
+              <View style={styles.middleContainer}>
+                <Text
+                  style={styles.txt}
+                  numberOfLines={1}
+                  ellipsizeMode={"tail"}
+                >
+                  {media.song}
+                </Text>
+                <Text style={styles.PlayText}>Air pods Connected </Text>
+              </View>
+              {/* RightContainer */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"bluetooth"} color={"green"} />
+              </View>
+              {/* RightContainer 2 */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"play"} color={"#fff"} />
+              </View>
+            </Animated.View>
+            {/* mini Player */}
+          </PanGestureHandler>
+
+          {/* SCREEN PLAYER */}
+          <Animated.View style={[styles.screenPlayer, ScreenPlayerStyles]}>
+            {/* TopTab */}
+            <Animated.View style={[styles.TopTab, TopTabStyle]}>
+              <View style={styles.leftContainer}>
+                <Tabicon iconname={"chevron-down-outline"} color={"white"} />
+              </View>
+              <View style={styles.MiddleContainer}>
+                <Text style={styles.LikedText}>Liked Song</Text>
+              </View>
+            </Animated.View>
+            {/* TopTab */}
+
+            <Animated.View
+              style={[styles.MainMusicContainer, MusicScreenSytle]}
+            >
+              <Image style={styles.imges} source={media.Image} />
+              <Text numberOfLines={1} style={styles.StartupHeader}>
+                Song: {media.song}
+              </Text>
+              <Text style={styles.StartupHeader2}>
+                Library: {media.Library}
+              </Text>
+
+              {/* slider */}
+              <View
+                style={{
+                  height: 40,
+                  width: "100%",
+                  alignItems: "center",
+                  marginTop: "10%",
+                }}
+              >
+                <Slider
+                  style={{ width: 300 }}
+                  step={1}
+                  minimumValue={18}
+                  maximumValue={71}
+                  value={18}
+                  minimumTrackTintColor={"green"}
+                  maximumTrackTintColor={"white"}
+                />
+              </View>
+              {/* slider */}
+
+              <View
+                style={{
+                  width: "80%",
+                  height: "20%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  marginBottom: h("5%"),
+                  // backgroundColor: "red",
+                }}
+              >
+                <Tabicon iconname={"caret-back-outline"} color={"#fff"} />
+                <Tabicon iconname={"pause-sharp"} color={"#fff"} />
+                <Tabicon iconname={"caret-forward-outline"} color={"#fff"} />
+              </View>
+            </Animated.View>
+          </Animated.View>
+          {/* SCREEN PLAYER */}
+
+          {/* Animtions */}
+          <Animated.View
+            style={[
+              SlideBottomTab,
+              {
+                // backgroundColor: "red",
+                width: "100%",
+                height: "30%",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                zIndex: -1,
+                flexDirection: "row",
+              },
+            ]}
+          >
+            <Tab
+              firstBtn={() => {
+                setScreen("screenOne");
+              }}
+              SecondBtn={() => {
+                setScreen("screenTwo");
+              }}
+              ThirdBtn={() => {
+                setScreen("screenThree");
+              }}
+              ForthBtn={() => {
+                setScreen("ForthScreen");
+              }}
+            />
+          </Animated.View>
         </>
       )}
 
@@ -318,17 +436,267 @@ const Bottomtabs = (props) => {
             </View>
             {/* listing */}
           </View>
-          <Tab
-            firstBtn={() => {
-              setScreen("screenOne");
-            }}
-            SecondBtn={() => {
-              setScreen("screenTwo");
-            }}
-            ThirdBtn={() => {
-              setScreen("screenThree");
-            }}
-          />
+          {/* animation */}
+          <PanGestureHandler onGestureEvent={GestureFunction}>
+            {/* mini Player */}
+            <Animated.View style={[styles.minPlayer, MoveSlider]}>
+              {/* leftContainer */}
+              <View style={styles.imgContainer}>
+                <Image style={styles.img} source={media.Image} />
+              </View>
+              {/* MidContainer */}
+              <View style={styles.middleContainer}>
+                <Text
+                  style={styles.txt}
+                  numberOfLines={1}
+                  ellipsizeMode={"tail"}
+                >
+                  {media.song}
+                </Text>
+                <Text style={styles.PlayText}>Air pods Connected </Text>
+              </View>
+              {/* RightContainer */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"bluetooth"} color={"green"} />
+              </View>
+              {/* RightContainer 2 */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"play"} color={"#fff"} />
+              </View>
+            </Animated.View>
+            {/* mini Player */}
+          </PanGestureHandler>
+
+          {/* SCREEN PLAYER */}
+          <Animated.View style={[styles.screenPlayer, ScreenPlayerStyles]}>
+            {/* TopTab */}
+            <Animated.View style={[styles.TopTab, TopTabStyle]}>
+              <View style={styles.leftContainer}>
+                <Tabicon iconname={"chevron-down-outline"} color={"white"} />
+              </View>
+              <View style={styles.MiddleContainer}>
+                <Text style={styles.LikedText}>Liked Song</Text>
+              </View>
+            </Animated.View>
+            {/* TopTab */}
+
+            <Animated.View
+              style={[styles.MainMusicContainer, MusicScreenSytle]}
+            >
+              <Image style={styles.imges} source={media.Image} />
+              <Text numberOfLines={1} style={styles.StartupHeader}>
+                Song: {media.song}
+              </Text>
+              <Text style={styles.StartupHeader2}>
+                Library: {media.Library}
+              </Text>
+
+              {/* slider */}
+              <View
+                style={{
+                  height: 40,
+                  width: "100%",
+                  alignItems: "center",
+                  marginTop: "10%",
+                }}
+              >
+                <Slider
+                  style={{ width: 300 }}
+                  step={1}
+                  minimumValue={18}
+                  maximumValue={71}
+                  value={18}
+                  minimumTrackTintColor={"green"}
+                  maximumTrackTintColor={"white"}
+                />
+              </View>
+              {/* slider */}
+
+              <View
+                style={{
+                  width: "80%",
+                  height: "20%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  marginBottom: h("5%"),
+                  // backgroundColor: "red",
+                }}
+              >
+                <Tabicon iconname={"caret-back-outline"} color={"#fff"} />
+                <Tabicon iconname={"pause-sharp"} color={"#fff"} />
+                <Tabicon iconname={"caret-forward-outline"} color={"#fff"} />
+              </View>
+            </Animated.View>
+          </Animated.View>
+          {/* SCREEN PLAYER */}
+
+          {/* Animtions */}
+          <Animated.View
+            style={[
+              SlideBottomTab,
+              {
+                // backgroundColor: "red",
+                width: "100%",
+                height: "30%",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                zIndex: -1,
+                flexDirection: "row",
+              },
+            ]}
+          >
+            <Tab
+              firstBtn={() => {
+                setScreen("screenOne");
+              }}
+              SecondBtn={() => {
+                setScreen("screenTwo");
+              }}
+              ThirdBtn={() => {
+                setScreen("screenThree");
+              }}
+              ForthBtn={() => {
+                setScreen("ForthScreen");
+              }}
+            />
+          </Animated.View>
+        </>
+      )}
+      {screen === "ForthScreen" && (
+        <>
+          <View style={styles.FlatlistContainer}>
+            <View style={styles.Header2}>
+              <Text style={styles.HText}>ACCOUNT</Text>
+            </View>
+          </View>
+          {/* animation */}
+          <PanGestureHandler onGestureEvent={GestureFunction}>
+            {/* mini Player */}
+            <Animated.View style={[styles.minPlayer, MoveSlider]}>
+              {/* leftContainer */}
+              <View style={styles.imgContainer}>
+                <Image style={styles.img} source={media.Image} />
+              </View>
+              {/* MidContainer */}
+              <View style={styles.middleContainer}>
+                <Text
+                  style={styles.txt}
+                  numberOfLines={1}
+                  ellipsizeMode={"tail"}
+                >
+                  {media.song}
+                </Text>
+                <Text style={styles.PlayText}>Air pods Connected </Text>
+              </View>
+              {/* RightContainer */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"bluetooth"} color={"green"} />
+              </View>
+              {/* RightContainer 2 */}
+              <View style={styles.RightConTainer}>
+                <Tabicon iconname={"play"} color={"#fff"} />
+              </View>
+            </Animated.View>
+            {/* mini Player */}
+          </PanGestureHandler>
+
+          {/* SCREEN PLAYER */}
+          <Animated.View style={[styles.screenPlayer, ScreenPlayerStyles]}>
+            {/* TopTab */}
+            <Animated.View style={[styles.TopTab, TopTabStyle]}>
+              <View style={styles.leftContainer}>
+                <Tabicon iconname={"chevron-down-outline"} color={"white"} />
+              </View>
+              <View style={styles.MiddleContainer}>
+                <Text style={styles.LikedText}>Liked Song</Text>
+              </View>
+            </Animated.View>
+            {/* TopTab */}
+
+            <Animated.View
+              style={[styles.MainMusicContainer, MusicScreenSytle]}
+            >
+              <Image style={styles.imges} source={media.Image} />
+              <Text numberOfLines={1} style={styles.StartupHeader}>
+                Song: {media.song}
+              </Text>
+              <Text style={styles.StartupHeader2}>
+                Library: {media.Library}
+              </Text>
+
+              {/* slider */}
+              <View
+                style={{
+                  height: 40,
+                  width: "100%",
+                  alignItems: "center",
+                  marginTop: "10%",
+                }}
+              >
+                <Slider
+                  style={{ width: 300 }}
+                  step={1}
+                  minimumValue={18}
+                  maximumValue={71}
+                  value={18}
+                  minimumTrackTintColor={"green"}
+                  maximumTrackTintColor={"white"}
+                />
+              </View>
+              {/* slider */}
+
+              <View
+                style={{
+                  width: "80%",
+                  height: "20%",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-around",
+                  marginBottom: h("5%"),
+                  // backgroundColor: "red",
+                }}
+              >
+                <Tabicon iconname={"caret-back-outline"} color={"#fff"} />
+                <Tabicon iconname={"pause-sharp"} color={"#fff"} />
+                <Tabicon iconname={"caret-forward-outline"} color={"#fff"} />
+              </View>
+            </Animated.View>
+          </Animated.View>
+          {/* SCREEN PLAYER */}
+
+          {/* Animtions */}
+          <Animated.View
+            style={[
+              SlideBottomTab,
+              {
+                // backgroundColor: "red",
+                width: "100%",
+                height: "30%",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                zIndex: -1,
+                flexDirection: "row",
+              },
+            ]}
+          >
+            <Tab
+              firstBtn={() => {
+                setScreen("screenOne");
+              }}
+              SecondBtn={() => {
+                setScreen("screenTwo");
+              }}
+              ThirdBtn={() => {
+                setScreen("screenThree");
+              }}
+              ForthBtn={() => {
+                setScreen("ForthScreen");
+              }}
+            />
+          </Animated.View>
         </>
       )}
     </View>
